@@ -4,14 +4,20 @@ import Dropdown from '@/Components/Dropdown';
 import NavLink from '@/Components/NavLink';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink';
 import { Link } from '@inertiajs/react';
+import { Select } from 'antd';
+import { ScheduleTwoTone, MoneyCollectTwoTone, ShopTwoTone, HomeTwoTone } from '@ant-design/icons'
 
 export default function Authenticated({ user, header, children }) {
     const [showingNavigationDropdown, setShowingNavigationDropdown] = useState(false);
 
+    const handleChange = (value) => {
+        console.log(`selected ${value}`);
+    };
+
     return (
         <div className="min-h-screen bg-gray-100">
             <nav className="bg-white border-b border-gray-100">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div className="max-w-full mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="flex justify-between h-16">
                         <div className="flex">
                             <div className="shrink-0 flex items-center">
@@ -20,11 +26,35 @@ export default function Authenticated({ user, header, children }) {
                                 </Link>
                             </div>
 
-                            <div className="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                            <div className="hidden sm:-my-px sm:ml-10 sm:flex">
                                 <NavLink href={route('dashboard')} active={route().current('dashboard')}>
+                                    <HomeTwoTone style={{ fontSize: '26px', marginRight: '10px' }}/>
                                     Dashboard
                                 </NavLink>
                             </div>
+                            <div className="hidden space-x-1 sm:-my-px sm:ml-10 sm:flex">
+                                <NavLink href={route('cashier')} active={route().current('cashier')}>
+                                    <MoneyCollectTwoTone style={{ fontSize: '26px', marginRight: '10px' }}/>
+                                    Cashier
+                                </NavLink>
+                            </div>
+                            <div className="hidden space-x-2 sm:-my-px sm:ml-10 sm:flex">
+                                <NavLink href={route('appointment')} active={route().current('appointment')}>
+                                    <ScheduleTwoTone style={{ fontSize: '26px', marginRight: '10px' }}/>
+                                    Appointment
+                                </NavLink>
+                            </div>
+                            <div className="hidden space-x-1 sm:-my-px sm:ml-10 sm:flex">
+                                <NavLink>
+                                    <ShopTwoTone style={{ fontSize: '26px', marginRight: '10px' }}/>
+                                    Products
+                                </NavLink>
+                            </div>
+                            <div className="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                                <NavLink>
+                                    Staff
+                                </NavLink>
+                            </div>                   
                         </div>
 
                         <div className="hidden sm:flex sm:items-center sm:ml-6">
@@ -120,6 +150,29 @@ export default function Authenticated({ user, header, children }) {
             )}
 
             <main>{children}</main>
+            <footer className="bg-white shadow dark:bg-gray-200 fixed bottom-0 left-0 z-20 w-full">
+                <div className="w-full mx-auto max-w-screen-xl p-4 md:flex md:items-center md:justify-between">
+                    <span className="text-sm text-gray-500 sm:text-center dark:text-gray-400">
+                        <Select
+                            defaultValue="English"
+                            style={{
+                                width: 120,
+                            }}
+                            onChange={handleChange}
+                            options={[
+                                {
+                                    value: 'en',
+                                    label: 'English',
+                                },
+                                {
+                                    value: 'vn',
+                                    label: 'Tiếng Việt',
+                                },
+                            ]}
+                        />
+                    </span>
+                </div>
+            </footer>
         </div>
     );
 }
